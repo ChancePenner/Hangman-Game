@@ -30,6 +30,17 @@ document.getElementById("inputPhrase").addEventListener("submit", function(event
   let form = document.getElementById("inputPhrase");
   form.reset();
 
+  var buttons = document.querySelectorAll(".letter");
+  var buttonsCount = document.querySelectorAll(".letter").length;
+  for(let i=0;i<buttonsCount;i++)
+  {
+    buttons[i].style.visibility="visible";
+    buttons[i].style.display="visible";
+
+      //action to be taken once button pushed
+      //alert(this.value);
+
+  }
 });
 
 // const buttons = document.querySelectorAll('.letter')
