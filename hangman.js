@@ -6,7 +6,9 @@ var hangman =
     console.log("phrase: ", n)
     this.phrase = n;
     console.log("this phrase: ", this.phrase)
-
+  },
+  getPhrase: ()=>{
+    return this.phrase;
   }
   // setNumber1: function(n){this.number1 = Number(n.value)},
   // setNumber2: function(n){this.number2 = Number(n.value)},
@@ -37,5 +39,5 @@ document.getElementById("inputPhrase").addEventListener("submit", function(event
   // document.querySelector("#guessPhrase").innerText = "";
   console.log("bruh");
 
-  console.log(hangman.phrase);
+  console.log(hangman.getPhrase());
 });
