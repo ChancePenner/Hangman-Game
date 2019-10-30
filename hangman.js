@@ -10,34 +10,23 @@ var hangman =
   getPhrase: ()=>{
     return this.phrase;
   }
-  // setNumber1: function(n){this.number1 = Number(n.value)},
-  // setNumber2: function(n){this.number2 = Number(n.value)},
-  // getResult: function(){return Number(this.number1 + this.number2)}
+  
 }
 
  window.setPhrase = function(){
 
-  console.log("hi");
+  console.log("YES");
   hangman.setPhrase(document.querySelector("#guessPhrase").value);
   console.log(hangman.phrase);
   console.log("hih");
 
 }
-// document.getElementsByName("inputPhrase")[0].addEventListener("click", function(event){
-//   setPhrase();
-//   event.preventDefault()
-// });
 
+//this addEventListener is needed to use preventDefault to stop the form from submitting
 document.getElementById("inputPhrase").addEventListener("submit", function(event){
   event.preventDefault()
 
-  // game = new hangman;
-  //setPhrase();
-  // game.setPhrase(document.querySelector("#guessPhrase").value);
   let form = document.getElementById("inputPhrase");
-  // form.reset();
-  // document.querySelector("#guessPhrase").innerText = "";
-  console.log("bruh");
+  form.reset();
 
-  console.log(hangman.getPhrase());
 });
