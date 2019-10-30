@@ -23,9 +23,9 @@
     <input type="submit">
   </form> -->
 
-      <form name="inputPhrase" onsubmit="setPhrase()" id="inputPhrase">
+      <form name="inputPhrase" onsubmit="setPhrase()" id="inputPhrase" autocomplete="off">
         Word to guess: <input type="text" name="guessPhrase" id = "guessPhrase" pattern="[A-Za-z,-]{3,}" required>
-      <input type="submit">
+      <input type="submit" value="Start Game" >
       <button value="Refresh Page" onClick="window.location.reload();">Reset</button>
     </form>
       <br>
