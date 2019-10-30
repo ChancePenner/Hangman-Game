@@ -1,0 +1,37 @@
+<!-- index.html -->
+
+<html>
+  <head>
+    <title>Hangman</title>
+
+  </head>
+
+    <body>
+
+      <h1>Welcome to Hangman</h1>
+      <h2>Made by Chance Penner</h2>
+
+      Enter a phrase for someone to guess. Separate words by hyphens.<br><br>
+
+      <!-- <form name="inputPhrase" onsubmit="return setPhrase()">
+        Word to guess: <input type="text" name="guessPhrase" pattern="[A-Za-z]{3,}" id = "guessPhrase">
+      <input type="submit">
+    </form> -->
+
+    <!-- <form name="inputPhrase" onsubmit="setPhrase()" id="inputPhrase">
+      Word to guess: <input type="text" name="guessPhrase" id = "guessPhrase">
+    <input type="submit">
+  </form> -->
+
+      <form name="inputPhrase" onsubmit="setPhrase()" id="inputPhrase">
+        Word to guess: <input type="text" name="guessPhrase" id = "guessPhrase">
+      <input type="submit">
+    </form>
+
+
+    </body>
+
+    <script src="hangman.js"></script>
+
+
+</html>
