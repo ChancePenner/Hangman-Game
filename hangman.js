@@ -2,6 +2,7 @@
 var hangman =
 {
   phrase: "",
+  livesCount: 8,
   setPhrase: (n)=>{
     console.log("phrase: ", n)
     this.phrase = n;
@@ -11,6 +12,8 @@ var hangman =
     return this.phrase;
   },
   checkForLetter: (n)=>{
+
+    let correctGuess = 0; //if it stays 0, that means the player guessed a wrong letter
 
     //scans through the string, replacing any occurence of the guessed letter
     //with a "@"". I chose a @ because this keeps the string length
@@ -33,25 +36,38 @@ var hangman =
       if(this.phrase.charAt(i) == n.toUpperCase())
       {
         this.phrase = this.phrase.replace(n.toUpperCase(),'@')
+        correctGuess++;
       }
       //replaces any lowercase version of the guessed letter with an @
       else if(this.phrase.charAt(i) == n.toLowerCase())
       {
         this.phrase = this.phrase.replace(n.toLowerCase(),'@')
+        correctGuess++;
       }
     }
 
+    if(correctGuess == 0)
+    {
+      //decrease their lives and draw more of the stick figure
+      this.livesCount--;
+      hangman.drawHangman();
+    }
     //replaces all @ symbols with '' empty space, updating the phrase
     //to only have what letters are left to guess in it
     this.phrase = this.phrase.replace(/@/g, "");
     console.log("new phrase is");
     console.log(this.phrase);
+  },
+  drawHangman: ()=>{
+    //8 if, else if, statements, that, depending on the number of lives,
+    //draws a certain image.
+    //draw more of the dude
+    let head = document.getElementById("head");
+    console.log(head);
+    head.style.display="";
+
   }
 
-
-  //add list of all letters, and once used, just remove them. use a function that
-  //just checks "if letter in this array, then get rid of it and then check if in word,
-  //if not in it, then already guessed"
 }
 
  window.setPhrase = function(){
@@ -67,7 +83,16 @@ document.getElementById("inputPhrase").addEventListener("submit", function(event
   event.preventDefault()
 
   let form = document.getElementById("inputPhrase");
-  form.reset();
+  form.reset(); //resets the text box so that clicking on it again won't show
+                //previously typed responses
+
+  let inputGuessPhrase = document.getElementById("guessPhrase");
+  inputGuessPhrase.disabled = true;
+
+  let startButton = document.getElementById("startButton");
+  startButton.disabled = true; //disables the start button so the
+                                      //user must hit reset
+
 
   var buttons = document.querySelectorAll(".letter");
   var buttonsCount = document.querySelectorAll(".letter").length;
@@ -82,10 +107,6 @@ document.getElementById("inputPhrase").addEventListener("submit", function(event
   }
 });
 
-// const buttons = document.querySelectorAll('.letter')
-// buttons.forEach(function(currentBtn){
-//   currentBtn.addEventListener('click', handleEvent)
-// })
 
 var buttons = document.querySelectorAll(".letter");
 var buttonsCount = document.querySelectorAll(".letter").length;
@@ -94,7 +115,7 @@ for(let i=0;i<buttonsCount;i++)
 {
   buttons[i].onclick=function(e){
     hangman.checkForLetter(buttons[i].value); //once the button is pressed, we call to check if it's
-                                        //in the word/phrase
+                                              //in the word/phrase
     this.style.visibility="hidden"; //makes the letter disappear once guessed
     //action to be taken once button pushed
     //alert(this.value);

@@ -24,12 +24,15 @@
   </form> -->
 
       <form name="inputPhrase" onsubmit="setPhrase()" id="inputPhrase" autocomplete="off">
-        Word to guess: <input type="text" name="guessPhrase" id = "guessPhrase" pattern="[A-Za-z,-]{3,}" required>
-      <input type="submit" value="Start Game" >
+        Word to guess: <input type="text" name="guessPhrase" id = "guessPhrase" pattern="[A-Za-z-]{3,}" required>
+      <input type="submit" id="startButton" value="Start Game" >
       <button value="Refresh Page" onClick="window.location.reload();">Reset</button>
     </form>
       <br>
-     <br><br>
+     <br>
+     <img src="head.png" id="head" style="display:none"></img>
+
+     <br><br><br><br><br>
 
     <button class="letter" value="a" style="visibility:hidden">a</button>
     <button class="letter" value="b" style="visibility:hidden">b</button>
