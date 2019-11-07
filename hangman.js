@@ -11,7 +11,7 @@ var hangman =
     this.permanentPhrase = n;
     this.phrase = n;
     this.currentPhrase = n; //initialize it so that it's the same length
-    for(let i=0;i<n.length;i++)
+    for(let i=0;i<n.length;i++) //changes all letters to underscores
     {
       if(this.phrase.charAt(i) == "-")
       {
@@ -21,8 +21,12 @@ var hangman =
       {
         this.currentPhrase = this.currentPhrase.substr(0, i) + "_" + this.currentPhrase.substr(i + 1);
       }
-      // Thank you stackoverflow
+      // Thank you stackoverflow ^^^^
       // https://stackoverflow.com/questions/1431094/how-do-i-replace-a-character-at-a-particular-index-in-javascript
+
+      //thank you stackoverflow vvvv
+      //https://stackoverflow.com/questions/7437385/add-a-space-between-characters-in-a-string
+      hangman.updatePhrase();
     }
     console.log("this phrase: ", this.phrase)
     console.log("this currentPhrase: ", this.currentPhrase)
@@ -37,7 +41,7 @@ var hangman =
 
     //scans through the string, replacing any occurence of the guessed letter
     //with a "@"". I chose a @ because this keeps the string length
-    //the same so that the for loop runs correctly. 
+    //the same so that the for loop runs correctly.
 
     for(i=0;i<this.phrase.length;i++)
     {
@@ -62,10 +66,7 @@ var hangman =
       hangman.drawHangman();
     }
 
-    //DELETE THESE COMMENTS vvvvv
-    //replaces all @ symbols with '' empty space, updating the phrase
-    //to only have what letters are left to guess in it
-    // this.phrase = this.phrase.replace(/@/g, "");
+    hangman.checkForWin();
 
     for(let i=0;i<this.permanentPhrase.length;i++)
     {
@@ -85,17 +86,40 @@ var hangman =
       // https://stackoverflow.com/questions/1431094/how-do-i-replace-a-character-at-a-particular-index-in-javascript
     }
 
+    hangman.updatePhrase(); //calls to update the displayed phrase
+  },
+  checkForWin: ()=>{
+    console.log("check for win", this.phrase)
+    let noMissingLetters = true;
+    for(let i=0;i<this.phrase.length;i++)
+    {
+      if(this.phrase.charAt(i) != "@" && this.phrase.charAt(i) != "-")
+      {
+        noMissingLetters = false;
+      }
+    }
+    if(noMissingLetters)
+    {
+      for(let i=0;i<buttonsCount;i++)
+      {
+        buttons[i].disabled=true;
+
+          //action to be taken once button pushed
+          //alert(this.value);
+
+      }
+      alert("YOU WIN!")
+    }
+  },
+  //updates the phrase to be displayed as the player guesses
+  updatePhrase: ()=>{
+    //updates the displayed phrase, with eye-pleasing spacing
     this.currentPhraseWithSpaces = this.currentPhrase;  //reinitializes to whatever current string is at the time
 
     //thank you stackoverflow
     //https://stackoverflow.com/questions/7437385/add-a-space-between-characters-in-a-string
     this.currentPhraseWithSpaces = this.currentPhraseWithSpaces.split("").join(" ");  //this just adds spaces in between each letter for visibility
     document.getElementById("displayCurrentPhrase").innerText = this.currentPhraseWithSpaces;
-  },
-  //updates the phrase to be displayed as the player guesses
-  updatePhrase: ()=>{
-
-
   },
   drawHangman: ()=>{
     //8 if, else if, statements, that, depending on the number of lives,
