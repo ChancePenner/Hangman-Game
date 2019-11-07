@@ -37,7 +37,7 @@ var hangman =
   checkForLetter: (n)=>{
     console.log("this currentPhrase: ", this.currentPhrase)
 
-    let correctGuess = 0; //if it stays 0, that means the player guessed a wrong letter
+    let correctGuess = false; //if it stays false, that means the player guessed a wrong letter
 
     //scans through the string, replacing any occurence of the guessed letter
     //with a "@"". I chose a @ because this keeps the string length
@@ -49,23 +49,17 @@ var hangman =
       if(this.phrase.charAt(i) == n.toUpperCase())
       {
         this.phrase = this.phrase.replace(n.toUpperCase(),'@')
-        correctGuess++;
+        correctGuess = true;
       }
       //replaces any lowercase version of the guessed letter with an @
       else if(this.phrase.charAt(i) == n.toLowerCase())
       {
         this.phrase = this.phrase.replace(n.toLowerCase(),'@')
-        correctGuess++;
+        correctGuess = true;
       }
     }
 
-    if(correctGuess == 0)
-    {
-      //decrease their lives and draw more of the stick figure
-      this.livesCount--;
-      hangman.drawHangman();
-    }
-
+    hangman.checkForLoss(correctGuess);
     hangman.checkForWin();
 
     for(let i=0;i<this.permanentPhrase.length;i++)
@@ -88,6 +82,14 @@ var hangman =
 
     hangman.updatePhrase(); //calls to update the displayed phrase
   },
+  checkForLoss: (correctGuess)=>{
+    if(!correctGuess)
+    {
+      //decrease their lives and draw more of the stick figure
+      hangman.livesCount--;
+      hangman.drawHangman();
+    }
+  },
   checkForWin: ()=>{
     console.log("check for win", this.phrase)
     let noMissingLetters = true;
@@ -103,10 +105,6 @@ var hangman =
       for(let i=0;i<buttonsCount;i++)
       {
         buttons[i].disabled=true;
-
-          //action to be taken once button pushed
-          //alert(this.value);
-
       }
       alert("YOU WIN!")
     }
@@ -125,9 +123,45 @@ var hangman =
     //8 if, else if, statements, that, depending on the number of lives,
     //draws a certain image.
     //draw more of the dude
-    let head = document.getElementById("head");
-    // console.log(head);
-    // head.style.display="";
+    // let head = document.getElementById("head");
+
+    if(hangman.livesCount == 7)
+    {
+      // head.style.display="";
+    }
+    else if(hangman.livesCount == 6)
+    {
+
+    }
+    else if(hangman.livesCount == 5)
+    {
+
+    }
+    else if(hangman.livesCount == 4)
+    {
+
+    }
+    else if(hangman.livesCount == 3)
+    {
+
+    }
+    else if(hangman.livesCount == 2)
+    {
+
+    }
+    else if(hangman.livesCount == 1)
+    {
+
+    }
+    else if(hangman.livesCount == 0)
+    {
+      alert("YOU LOSE!")
+      //disable all the letter button
+      for(let i=0;i<buttonsCount;i++)
+      {
+        buttons[i].disabled=true;
+      }
+    }
 
   }
 
