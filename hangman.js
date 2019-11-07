@@ -1,12 +1,28 @@
 // hangman.js
 var hangman =
 {
-  phrase: "",
+  phrase: "", //becomes the actual phrase typed in
+  currentPhrase: "",  //the phrase to be displayed to the player. Updates as they guess
   livesCount: 8,
   setPhrase: (n)=>{
     console.log("phrase: ", n)
     this.phrase = n;
+    this.currentPhrase = n; //initialize it so that it's the same length
+    for(let i=0;i<n.length;i++)
+    {
+      if(this.phrase.charAt(i) == "-")
+      {
+        this.currentPhrase = this.currentPhrase.substr(0, i) + "-" + this.currentPhrase.substr(i + 1);
+      }
+      else
+      {
+        this.currentPhrase = this.currentPhrase.substr(0, i) + "_" + this.currentPhrase.substr(i + 1);
+      }
+      // Thank you stackoverflow
+      // https://stackoverflow.com/questions/1431094/how-do-i-replace-a-character-at-a-particular-index-in-javascript
+    }
     console.log("this phrase: ", this.phrase)
+    console.log("this currentPhrase: ", this.currentPhrase)
   },
   getPhrase: ()=>{
     return this.phrase;
@@ -57,6 +73,10 @@ var hangman =
     this.phrase = this.phrase.replace(/@/g, "");
     console.log("new phrase is");
     console.log(this.phrase);
+  },
+  //updates the phrase to be displayed as the player guesses
+  updatePhrase: ()=>{
+
   },
   drawHangman: ()=>{
     //8 if, else if, statements, that, depending on the number of lives,
