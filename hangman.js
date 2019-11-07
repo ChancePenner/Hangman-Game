@@ -91,6 +91,8 @@ var hangman =
     }
   },
   checkForWin: ()=>{
+    let win = document.getElementById("win");
+
     console.log("check for win", this.phrase)
     let noMissingLetters = true;
     for(let i=0;i<this.phrase.length;i++)
@@ -102,10 +104,27 @@ var hangman =
     }
     if(noMissingLetters)
     {
+      //disable all the letter buttons
       for(let i=0;i<buttonsCount;i++)
       {
         buttons[i].disabled=true;
       }
+
+      //disable all images that could possibly be on the screen
+
+      base.style.display="none";
+      first.style.display="none";
+      second.style.display="none";
+      third.style.display="none";
+      fourth.style.display="none";
+      fifth.style.display="none";
+      sixth.style.display="none";
+      seventh.style.display="none";
+      eighth.style.display="none";
+
+      //display the win image
+      win.style.display="";
+
       alert("YOU WIN!")
     }
   },
@@ -122,45 +141,62 @@ var hangman =
   drawHangman: ()=>{
     //8 if, else if, statements, that, depending on the number of lives,
     //draws a certain image.
-    //draw more of the dude
-    // let head = document.getElementById("head");
+
+    let first = document.getElementById("first");
+    let second = document.getElementById("second");
+    let third = document.getElementById("third");
+    let fourth = document.getElementById("fourth");
+    let fifth = document.getElementById("fifth");
+    let sixth = document.getElementById("sixth");
+    let seventh = document.getElementById("seventh");
+    let eighth = document.getElementById("eighth");
 
     if(hangman.livesCount == 7)
     {
-      // head.style.display="";
+      base.style.display="none";
+      first.style.display="";
     }
     else if(hangman.livesCount == 6)
     {
-
+      first.style.display="none";
+      second.style.display="";
     }
     else if(hangman.livesCount == 5)
     {
-
+      second.style.display="none";
+      third.style.display="";
     }
     else if(hangman.livesCount == 4)
     {
-
+      third.style.display="none";
+      fourth.style.display="";
     }
     else if(hangman.livesCount == 3)
     {
-
+      fourth.style.display="none";
+      fifth.style.display="";
     }
     else if(hangman.livesCount == 2)
     {
-
+      fifth.style.display="none";
+      sixth.style.display="";
     }
     else if(hangman.livesCount == 1)
     {
-
+      sixth.style.display="none";
+      seventh.style.display="";
     }
     else if(hangman.livesCount == 0)
     {
-      alert("YOU LOSE!")
+      seventh.style.display="none";
+      eighth.style.display="";
       //disable all the letter button
       for(let i=0;i<buttonsCount;i++)
       {
         buttons[i].disabled=true;
       }
+
+      alert("YOU LOSE!")
     }
 
   }
@@ -190,6 +226,7 @@ document.getElementById("inputPhrase").addEventListener("submit", function(event
   startButton.disabled = true; //disables the start button so the
                                       //user must hit reset
 
+  base.style.display=""; //display the base image
 
   var buttons = document.querySelectorAll(".letter");
   var buttonsCount = document.querySelectorAll(".letter").length;
@@ -197,10 +234,6 @@ document.getElementById("inputPhrase").addEventListener("submit", function(event
   {
     buttons[i].style.visibility="visible";
     buttons[i].style.display="visible";
-
-      //action to be taken once button pushed
-      //alert(this.value);
-
   }
 });
 
@@ -214,8 +247,7 @@ for(let i=0;i<buttonsCount;i++)
     hangman.checkForLetter(buttons[i].value); //once the button is pressed, we call to check if it's
                                               //in the word/phrase
     this.style.visibility="hidden"; //makes the letter disappear once guessed
-    //action to be taken once button pushed
-    //alert(this.value);
+
   }
 }
 
