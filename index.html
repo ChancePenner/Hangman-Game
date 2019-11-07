@@ -13,23 +13,12 @@
 
       Enter a phrase for someone to guess. Separate words by hyphens.<br><br>
 
-      <!-- <form name="inputPhrase" onsubmit="return setPhrase()">
-        Word to guess: <input type="text" name="guessPhrase" pattern="[A-Za-z]{3,}" id = "guessPhrase">
-      <input type="submit">
-    </form> -->
-
-    <!-- <form name="inputPhrase" onsubmit="setPhrase()" id="inputPhrase">
-      Word to guess: <input type="text" name="guessPhrase" id = "guessPhrase">
-    <input type="submit">
-  </form> -->
-
       <form name="inputPhrase" onsubmit="setPhrase()" id="inputPhrase" autocomplete="off">
         Word to guess: <input type="text" name="guessPhrase" id = "guessPhrase" pattern="[A-Za-z-]{3,}" required>
       <input type="submit" id="startButton" value="Start Game" >
       <button value="Refresh Page" onClick="window.location.reload();">Reset</button>
     </form>
       <br>
-     <br>
 
      <img src="base.png" id="base" style="display:none" width="200" height="200"></img>
      <img src="first.png" id="first" style="display:none" width="200" height="200"></img>
@@ -73,7 +62,6 @@
     <button class="letter" value="x" style="visibility:hidden">x</button>
     <button class="letter" value="y" style="visibility:hidden">y</button>
     <button class="letter" value="z" style="visibility:hidden">z</button>
-
 
     </body>
 
