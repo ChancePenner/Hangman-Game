@@ -1,11 +1,14 @@
 // hangman.js
 var hangman =
 {
-  phrase: "", //becomes the actual phrase typed in
+  permanentPhrase: "",  //phrase, but we don't mess with it
+  phrase: "", //becomes the actual phrase typed in, but we manipulate it
   currentPhrase: "",  //the phrase to be displayed to the player. Updates as they guess
+  currentPhraseWithSpaces: "",  //the current phrase, but we space it out to display nicely
   livesCount: 8,
   setPhrase: (n)=>{
     console.log("phrase: ", n)
+    this.permanentPhrase = n;
     this.phrase = n;
     this.currentPhrase = n; //initialize it so that it's the same length
     for(let i=0;i<n.length;i++)
@@ -28,23 +31,13 @@ var hangman =
     return this.phrase;
   },
   checkForLetter: (n)=>{
+    console.log("this currentPhrase: ", this.currentPhrase)
 
     let correctGuess = 0; //if it stays 0, that means the player guessed a wrong letter
 
     //scans through the string, replacing any occurence of the guessed letter
     //with a "@"". I chose a @ because this keeps the string length
-    //the same so that the for loop runs correctly. I then just replace
-    //every occurrence of an @ symbol with '' empty space.
-    //Why don't I just skip the middle man and replace any occurence
-    //of the guessed letter with '' empty space? Well, this is because
-    //the replace function only replaces the first occurrence of the
-    //passed in variable. I did modify it to replace any occurrence
-    //of a character, but only if you pass in the character, not a variable.
-    //For example:
-    // this.phrase = this.phrase.replace(/n/g, "");
-    // would replace every letter 'n', not my variable n, which holds the
-    // guessed letter. That's why I just forced everything to an @ so that
-    // I know to replace it with '' empty space
+    //the same so that the for loop runs correctly. 
 
     for(i=0;i<this.phrase.length;i++)
     {
@@ -68,14 +61,40 @@ var hangman =
       this.livesCount--;
       hangman.drawHangman();
     }
+
+    //DELETE THESE COMMENTS vvvvv
     //replaces all @ symbols with '' empty space, updating the phrase
     //to only have what letters are left to guess in it
-    this.phrase = this.phrase.replace(/@/g, "");
-    console.log("new phrase is");
-    console.log(this.phrase);
+    // this.phrase = this.phrase.replace(/@/g, "");
+
+    for(let i=0;i<this.permanentPhrase.length;i++)
+    {
+      if(this.phrase.charAt(i) == "@")
+      {
+        this.currentPhrase = this.currentPhrase.substr(0, i) + this.permanentPhrase.charAt(i) + this.currentPhrase.substr(i + 1);
+      }
+      else if(this.phrase.charAt(i) == "-")
+      {
+        this.currentPhrase = this.currentPhrase.substr(0, i) + "-" + this.currentPhrase.substr(i + 1);
+      }
+      else
+      {
+        this.currentPhrase = this.currentPhrase.substr(0, i) + "_" + this.currentPhrase.substr(i + 1);
+      }
+      // Thank you stackoverflow
+      // https://stackoverflow.com/questions/1431094/how-do-i-replace-a-character-at-a-particular-index-in-javascript
+    }
+
+    this.currentPhraseWithSpaces = this.currentPhrase;  //reinitializes to whatever current string is at the time
+
+    //thank you stackoverflow
+    //https://stackoverflow.com/questions/7437385/add-a-space-between-characters-in-a-string
+    this.currentPhraseWithSpaces = this.currentPhraseWithSpaces.split("").join(" ");  //this just adds spaces in between each letter for visibility
+    document.getElementById("displayCurrentPhrase").innerText = this.currentPhraseWithSpaces;
   },
   //updates the phrase to be displayed as the player guesses
   updatePhrase: ()=>{
+
 
   },
   drawHangman: ()=>{
@@ -83,8 +102,8 @@ var hangman =
     //draws a certain image.
     //draw more of the dude
     let head = document.getElementById("head");
-    console.log(head);
-    head.style.display="";
+    // console.log(head);
+    // head.style.display="";
 
   }
 
