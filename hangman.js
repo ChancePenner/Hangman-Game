@@ -7,7 +7,7 @@ var hangman =
   currentPhraseWithSpaces: "",  //the current phrase, but we space it out to display nicely
   livesCount: 8,
   setPhrase: (n)=>{
-    console.log("phrase: ", n)
+    // console.log("phrase: ", n)
     this.permanentPhrase = n;
     this.phrase = n;
     this.currentPhrase = n; //initialize it so that it's the same length
@@ -28,14 +28,14 @@ var hangman =
       //https://stackoverflow.com/questions/7437385/add-a-space-between-characters-in-a-string
       hangman.updatePhrase();
     }
-    console.log("this phrase: ", this.phrase)
-    console.log("this currentPhrase: ", this.currentPhrase)
+    // console.log("this phrase: ", this.phrase)
+    // console.log("this currentPhrase: ", this.currentPhrase)
   },
   getPhrase: ()=>{
     return this.phrase;
   },
   checkForLetter: (n)=>{
-    console.log("this currentPhrase: ", this.currentPhrase)
+    // console.log("this currentPhrase: ", this.currentPhrase)
 
     let correctGuess = false; //if it stays false, that means the player guessed a wrong letter
 
@@ -59,20 +59,21 @@ var hangman =
       }
     }
 
-    hangman.checkForLoss(correctGuess);
-    hangman.checkForWin();
+    hangman.checkForLoss(correctGuess); //check if player lost. Also, calls drawHangman() to update the picture
+    hangman.checkForWin();  //checks if the player just won
 
     for(let i=0;i<this.permanentPhrase.length;i++)
     {
-      if(this.phrase.charAt(i) == "@")
+      if(this.phrase.charAt(i) == "@")  //sets current phrase to phrase, but puts the correct values in for the @ symbol
+                                        //by checking permanentPhrase for the actual value at that index
       {
         this.currentPhrase = this.currentPhrase.substr(0, i) + this.permanentPhrase.charAt(i) + this.currentPhrase.substr(i + 1);
       }
-      else if(this.phrase.charAt(i) == "-")
+      else if(this.phrase.charAt(i) == "-") //sets hyphens to hyphens
       {
         this.currentPhrase = this.currentPhrase.substr(0, i) + "-" + this.currentPhrase.substr(i + 1);
       }
-      else
+      else  //sets everything else to underscores
       {
         this.currentPhrase = this.currentPhrase.substr(0, i) + "_" + this.currentPhrase.substr(i + 1);
       }
@@ -86,16 +87,18 @@ var hangman =
     if(!correctGuess)
     {
       //decrease their lives and draw more of the stick figure
-      hangman.livesCount--;
-      hangman.drawHangman();
+      hangman.livesCount--;   //decrement the lives
+      hangman.drawHangman();  //updates the picture
     }
   },
   checkForWin: ()=>{
-    let win = document.getElementById("win");
 
-    console.log("check for win", this.phrase)
+    let win = document.getElementById("win"); //the win picture
+
+    // console.log("check for win", this.phrase)
     let noMissingLetters = true;
-    for(let i=0;i<this.phrase.length;i++)
+    for(let i=0;i<this.phrase.length;i++) //if the entire string is now "@" and "-", then that means
+                                          //there are no more letters to guess, so the player wins
     {
       if(this.phrase.charAt(i) != "@" && this.phrase.charAt(i) != "-")
       {
@@ -107,7 +110,7 @@ var hangman =
       //disable all the letter buttons
       for(let i=0;i<buttonsCount;i++)
       {
-        buttons[i].disabled=true;
+        buttons[i].disabled=true; //disables the buttons
       }
 
       //disable all images that could possibly be on the screen
@@ -125,7 +128,10 @@ var hangman =
       //display the win image
       win.style.display="";
 
-      alert("YOU WIN!")
+      //needs to be timed out otherwise alert will happen first
+      setTimeout(function() {
+        alert("YOU WIN!");
+        },10)
     }
   },
   //updates the phrase to be displayed as the player guesses
@@ -151,6 +157,8 @@ var hangman =
     let seventh = document.getElementById("seventh");
     let eighth = document.getElementById("eighth");
 
+    //these each disable the image that appear before them,
+    //and then display their respective image
     if(hangman.livesCount == 7)
     {
       base.style.display="none";
@@ -195,8 +203,13 @@ var hangman =
       {
         buttons[i].disabled=true;
       }
+      let alertVariable = "YOU LOSE!\nThe word was " + this.permanentPhrase;
 
-      alert("YOU LOSE!")
+      //needs to be timed out otherwise alert will happen first
+      setTimeout(function() {
+        	alert(alertVariable);
+        },10)
+
     }
 
   }
@@ -205,9 +218,9 @@ var hangman =
 
  window.setPhrase = function(){
 
-  console.log("in setPhrase");
+  // console.log("in setPhrase");
   hangman.setPhrase(document.querySelector("#guessPhrase").value);
-  console.log(hangman.phrase);
+  // console.log(hangman.phrase);
 
 }
 
@@ -220,7 +233,7 @@ document.getElementById("inputPhrase").addEventListener("submit", function(event
                 //previously typed responses
 
   let inputGuessPhrase = document.getElementById("guessPhrase");
-  inputGuessPhrase.disabled = true;
+  inputGuessPhrase.disabled = true; //disabled the input text box after game starts
 
   let startButton = document.getElementById("startButton");
   startButton.disabled = true; //disables the start button so the
@@ -230,7 +243,7 @@ document.getElementById("inputPhrase").addEventListener("submit", function(event
 
   var buttons = document.querySelectorAll(".letter");
   var buttonsCount = document.querySelectorAll(".letter").length;
-  for(let i=0;i<buttonsCount;i++)
+  for(let i=0;i<buttonsCount;i++) //makes all the buttons visible when game starts
   {
     buttons[i].style.visibility="visible";
     buttons[i].style.display="visible";
@@ -253,6 +266,6 @@ for(let i=0;i<buttonsCount;i++)
 
 for (var i = 0; i < buttons ; i++) {
     document.querySelectorAll(".letter")[i].addEventListener("click", function() {
-        console.log(document.querySelectorAll(".letter")[i].value)
+        // console.log(document.querySelectorAll(".letter")[i].value)
     });
 }
